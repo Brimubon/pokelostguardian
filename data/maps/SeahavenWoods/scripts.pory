@@ -1,0 +1,118 @@
+mapscripts SeahavenWoods_MapScripts {
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_LG_INTRO, 0: IntroCutscene
+    ]
+}
+
+script IntroCutscene{
+    lock
+    applymovement(OBJ_EVENT_ID_PLAYER, FirstMovement)
+    waitmovement(0)
+    delay(16)
+    msgbox(IntroDialouge_1)
+    delay(30)
+    applymovement(OBJ_EVENT_ID_PLAYER, SecondMovement)
+    waitmovement(0)
+    msgbox(IntroDialouge_2)
+    setvar(VAR_LG_INTRO, 1)
+    release
+    end
+}
+
+text IntroDialouge_1{
+    "I know I heard that weird sound come \n"
+    "from around here... \p"
+    "Of course, it could just be another \n"
+    "false alarm, but..."
+}
+
+text IntroDialouge_2{
+    "Oh well, 23rd time's the charm! \p"
+    "Just you wait, Manaphy! \n"
+    "I'll find you and save the town!"
+}
+
+movement FirstMovement{
+    face_up 
+    delay_16
+    face_right
+    delay_16 
+    face_down
+    delay_16
+    face_left
+}
+
+movement SecondMovement{
+    jump_in_place_left * 2
+}
+
+script SeahavenWoods_BlockPath{
+    lock
+    msgbox("I've come too far to turn back now!")
+    applymovement(OBJ_EVENT_ID_PLAYER, CorrectPath)
+    waitmovement(0)
+    release
+    end
+}
+
+movement CorrectPath{
+    walk_left
+}
+
+script SeahavenWoods_Rain{
+    lock
+    setweather(WEATHER_RAIN)
+    doweather
+    delay(16)
+    applymovement(OBJ_EVENT_ID_PLAYER, RainMovement_1)
+    waitmovement(0)
+    msgbox("I-it's raining?")
+    delay(45)
+    msgbox(format("Maybe I should just go back home after all..."))
+    delay(60)
+    playmoncry(SPECIES_PHIONE, 0)
+    waitmoncry
+    applymovement(OBJ_EVENT_ID_PLAYER, RainMovement_2)
+    waitmovement(0)
+    msgbox(RainDialouge_1)
+    applymovement(OBJ_EVENT_ID_PLAYER, RainMovement_3)
+    waitmovement(0)
+    msgbox(RainDialouge_2)
+    setvar(VAR_LG_INTRO_RAIN, 1)
+    release 
+    end
+    
+}
+
+text RainDialouge_1{
+    "There's that sound again! \n"
+    "I knew I wasn't just imagining things! \p"
+    "I've never heard anything like it... \n"
+    "that HAS to be Manaphy!"
+}
+
+text RainDialouge_2{
+    "Alright, no turning back! \n"
+    "Just a little further!"
+}
+
+movement RainMovement_1{
+    emote_exclamation_mark
+    delay_16
+    face_right
+    delay_16
+    face_left
+    delay_16
+    face_down
+}
+
+movement RainMovement_2{
+    emote_double_exclamation_mark
+    face_left
+    delay_8
+    face_right
+}
+
+movement RainMovement_3{
+    face_up
+}
